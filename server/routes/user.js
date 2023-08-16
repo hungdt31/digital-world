@@ -13,6 +13,7 @@ router.get('/',[ verifyAccessToken, isAdmin ],ctrls.getUsers)
 router.delete('/',[ verifyAccessToken, isAdmin ], ctrls.deleteUser)
 router.put('/current',verifyAccessToken, ctrls.updateUser)
 router.put('/:uid',[ verifyAccessToken, isAdmin ], ctrls.updateUserByAdmin)
+
 module.exports = router
 
 // CRUD | Create - Read - Update - Delete | POST - GET - UPDATE - DELETE
