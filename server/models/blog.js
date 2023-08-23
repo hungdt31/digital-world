@@ -28,6 +28,12 @@ var blogSchema = new mongoose.Schema({
             ref: 'User'
         }
     ],
+    dislikes:[
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
     image:{
         type:String,
         default:'c:\Users\ASUS\AppData\Local\Temp\flowers-notebook-near-laptop_23-2147759307.avif'

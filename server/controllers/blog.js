@@ -35,9 +35,21 @@ Khi người dùng like một bài blog thì:
  */
 const likeBlog = asyncHandler(async (req, res) => {
     const { _id } = req.user;
-    const { bid } = req.body;
+    const { bid } = req.params;
     if (!bid) throw new Error("Missing inputs");
     const blog = await Blog.findById(bid);
+    const alreadyDisLiked = blog?.dislikes?.find((el) => el.toString() === _id);
+    if (alreadyDisLiked) {
+        const rs = await Blog.findByIdAndUpdate(
+            bid,
+            { $pull: { dislikes: _id } },
+            { new: true }
+        );
+        return res.status(200).json({
+            success: rs ? true : false,
+            rs,
+        });
+    }
     const isLiked = blog?.likes?.find((el) => el.toString() === _id);
     var response;
     if (isLiked) {
@@ -58,9 +70,84 @@ const likeBlog = asyncHandler(async (req, res) => {
         rs: response,
     });
 });
+const disLikeBlog = asyncHandler(async (req, res) => {
+    const { _id } = req.user;
+    const { bid } = req.params;
+    if (!bid) throw new Error("Missing inputs");
+    const blog = await Blog.findById(bid);
+    const alreadyLiked = blog?.likes?.find((el) => el.toString() === _id);
+    if (alreadyLiked) {
+        const rs = await Blog.findByIdAndUpdate(
+            bid,
+            { $pull: { likes: _id } },
+            { new: true }
+        );
+        return res.status(200).json({
+            success: rs ? true : false,
+            rs,
+        });
+    }
+    const isDisliked = blog?.dislikes?.find((el) => el.toString() === _id);
+    var response;
+    if (isDisliked) {
+        response = await Blog.findByIdAndUpdate(
+            bid,
+            { $pull: { dislikes: _id } },
+            { new: true }
+        );
+    } else {
+        response = await Blog.findByIdAndUpdate(
+            bid,
+            { $push: { dislikes: _id } },
+            { new: true }
+        );
+    }
+    return res.status(200).json({
+        success: response ? true : false,
+        rs: response,
+    });
+});
+const getBlog = asyncHandler(async (req, res) => {
+    const { bid } = req.params;
+    const blog = await Blog.findByIdAndUpdate(
+        bid,
+        { $inc: { numberViews: 1 } },
+        { new: true }
+    )
+        .populate("likes", "firstname lastname")
+        .populate("dislikes", "firstname lastname");
+    return res.status(200).json({
+        success: blog ? true : false,
+        rs: blog,
+    });
+});
+const deleteBlog = asyncHandler(async (req, res) => {
+    const { bid } = req.params;
+    const blog = await Blog.findByIdAndDelete(
+        bid
+    )
+    return res.status(200).json({
+        success: blog ? true : false,
+        deletedBlog: blog || 'Something went wrong'
+    });
+});
+const uploadimageBlog = asyncHandler(async(req, res)=>{
+    console.log(req.file)
+    const { bid } = req.params
+    if (!req.file) throw new Error('Missing inputs')
+    const response = await Blog.findByIdAndUpdate(bid,{image: req.file.path},{new: true}).select('-createdAt -updatedAt')
+    return res.status(200).json({
+        success: response ? true : false,
+        rs: response ? response : 'Upload images blog'
+    })
+})
 module.exports = {
     createNewBlog,
     updateBlog,
     getBlogs,
     likeBlog,
+    disLikeBlog,
+    getBlog,
+    deleteBlog,
+    uploadimageBlog
 };
