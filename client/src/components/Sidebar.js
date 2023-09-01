@@ -12,12 +12,12 @@ const Sidebar = () => {
     }, []);
     // console.log(stateCategories)
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col border">
             <NavLink
                 to="/"
                 className={({ isActive }) =>
                     isActive
-                        ? "bg-main text-white px-5 pt-[15px] pb-[14px] text-sm"
+                        ? "bg-main text-white px-5 pt-[15px] pb-[14px] text-sm uppercase"
                         : "px-5 pt-[15px] pb-[14px] text-sm hover:text-main"
                 }
             >

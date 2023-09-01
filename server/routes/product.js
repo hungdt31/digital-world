@@ -13,6 +13,7 @@ router.put(
 );
 router.put("/ratings", verifyAccessToken, ctrls.ratings);
 router.put("/:pid", [verifyAccessToken, isAdmin], ctrls.updateProducts);
+router.delete("/deleteMany", [verifyAccessToken, isAdmin], ctrls.deleteManyProducts);
 router.delete("/:pid", [verifyAccessToken, isAdmin], ctrls.deleteProducts);
 router.get("/:pid", ctrls.getProduct);
 

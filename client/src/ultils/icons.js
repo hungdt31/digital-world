@@ -1,12 +1,18 @@
-import {BsFillTelephoneInboundFill, BsFillBagHeartFill} from 'react-icons/bs'
+import {BsFillTelephoneInboundFill, BsFillBagPlusFill} from 'react-icons/bs'
 import {SlEnvolopeLetter} from 'react-icons/sl'
-import {AiOutlineHeart} from 'react-icons/ai'
+import {AiOutlineHeart, AiOutlineStar,AiFillStar, AiOutlineAlignLeft, AiFillHeart} from 'react-icons/ai'
 import {BiSolidUserCircle} from 'react-icons/bi'
+import {FaEye} from 'react-icons/fa'
 const icons = {
     BsFillTelephoneInboundFill,
-    BsFillBagHeartFill,
+    BsFillBagPlusFill,
     SlEnvolopeLetter,
     AiOutlineHeart,
-    BiSolidUserCircle
+    BiSolidUserCircle,
+    AiOutlineStar,
+    AiFillStar,
+    AiOutlineAlignLeft,
+    AiFillHeart,
+    FaEye
 }
 export default icons

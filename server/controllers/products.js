@@ -83,6 +83,13 @@ const deleteProducts = asyncHandler(async(req, res) => {
         deletedProductData: deletedProduct ? deletedProduct : 'Cannot delete product'
     })
 })
+const deleteManyProducts = asyncHandler(async(req, res) => {
+    const deletedProducts = await Product.deleteMany({quantity: { $gte: 0 }})
+    return res.status(200).json({
+        success: deletedProducts ? true : false,
+        deletedProductData: deletedProducts ? 'Delete success' : 'Cannot delete product'
+    })
+})
 const ratings = asyncHandler(async(req, res)=>{
     const {_id} = req.user
     const {star, comment, pid} = req.body
@@ -141,5 +148,6 @@ module.exports = {
     updateProducts,
     deleteProducts,
     ratings,
-    uploadimageProduct
+    uploadimageProduct,
+    deleteManyProducts
 }

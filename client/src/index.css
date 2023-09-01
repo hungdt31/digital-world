@@ -2,3 +2,214 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+button.slick-next {
+    right: 80px;
+}
+
+button.slick-prev {
+    z-index: 10;
+    left: 20px;
+}
+
+button.slick-next::before {
+    color: gray;
+    display: flex;
+    justify-content: center;
+    content: '\276F';
+    width: 80px;
+    height: 80px;
+    align-items: center;
+    font-size: 30px;
+    background-color: rgba(212, 100, 94, 0.133);
+}
+
+button.slick-prev::before {
+    color: gray;
+    display: flex;
+    justify-content: center;
+    content: '\276E';
+    width: 80px;
+    height: 80px;
+    align-items: center;
+    font-size: 30px;
+    background-color: rgba(212, 100, 94, 0.133);
+}
+
+.product {
+    position: relative;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.product::before {
+    transition: opacity 0.5s ease-in-out;
+    animation: fade-in 2s ease-in-out;
+    display: none;
+    top: 0;
+    right: 0;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    content: '';
+    border-right: 3px solid #ee3131;
+    border-top: 3px solid #ee3131;
+}
+
+.product::after {
+    transition: opacity 0.5s ease-in-out;
+    animation: fade-in 2s ease-in-out;
+    display: none;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    content: '';
+    border-left: 3px solid #ee3131;
+    border-bottom: 3px solid #ee3131;
+}
+
+.product:hover.product::after {
+    display: block;
+}
+
+.product:hover.product::before {
+    display: block;
+}
+
+.tag-wrap {
+    right: 10px;
+    position: absolute;
+    filter: drop-shadow(-1px 6px 3px rgba(187, 187, 172, 0.5));
+}
+
+.tag {
+    padding-top: 4px;
+    opacity: 0.6;
+    width: 80px;
+    text-align: center;
+    display: block;
+    height: 25px;
+    color: #fff;
+    font: bold 12px system-ui;
+    clip-path: polygon(14% 0, 100% 0%, 100% 100%, 13% 100%, 0% 50%);
+}
+
+.img-banner {
+    position: relative;
+    animation: fadeInOutCenter 3s ease-in-out;
+}
+
+.text-banner1 {
+    opacity: 0;
+    animation: tracking-in-expand 2s 3s forwards;
+}
+
+.text-banner2 {
+    opacity: 0;
+    animation: tracking-in-expand 2s 5s forwards;
+}
+
+.text-banner3 {
+    opacity: 0;
+    animation: tracking-in-expand-fwd-bottom 2s 7s forwards;
+}
+
+@keyframes fadeInOutCenter {
+    0% {
+        opacity: 0.2;
+        filter: brightness(50%);
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        filter: brightness(100%);
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes tracking-in-expand {
+    0% {
+        letter-spacing: -0.5em;
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes tracking-in-expand {
+    0% {
+        letter-spacing: -0.5em;
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes tracking-in-expand-fwd-bottom {
+    0% {
+        letter-spacing: -0.5em;
+        -webkit-transform: translateZ(-700px) translateY(500px);
+        transform: translateZ(-700px) translateY(500px);
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0.6;
+    }
+
+    100% {
+        -webkit-transform: translateZ(0) translateY(0);
+        transform: translateZ(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes tracking-in-expand-fwd-bottom {
+    0% {
+        letter-spacing: -0.5em;
+        -webkit-transform: translateZ(-700px) translateY(500px);
+        transform: translateZ(-700px) translateY(500px);
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0.6;
+    }
+
+    100% {
+        -webkit-transform: translateZ(0) translateY(0);
+        transform: translateZ(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+.option {
+    display: none;
+}
+
+.product:hover>.option {
+    display: block;
+}

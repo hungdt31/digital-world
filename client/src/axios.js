@@ -2,6 +2,7 @@ import axios from "axios"
 const instance = axios.create({
     baseURL: process.env.REACT_APP_API_URI,
 });
+
 // Add a request interceptor: được chạy trước khi API được chạy
 axios.interceptors.request.use(
     function (config) {
@@ -11,6 +12,7 @@ axios.interceptors.request.use(
     function (error) {
         // Do something with request error
         return Promise.reject(error);
+        // return <ErrorComponent/>
     }
 );
 
@@ -24,7 +26,7 @@ axios.interceptors.response.use(
     function (error) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         // Do something with response error
-        return error.data;
+        return error.data
     }
 );
 export default instance

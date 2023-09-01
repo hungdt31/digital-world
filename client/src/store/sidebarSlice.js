@@ -21,7 +21,6 @@ export const sidebarSlice = createSlice({
         // Khi thực hiện action getCategories thành công (Promise fulfilled)
         builder.addCase(getCategories.fulfilled, (state, action) => {
             // Tắt trạng thái loading, lưu thông tin user vào store
-            
             state.isLoading = false;
             state.categories = action.payload;
         });
@@ -31,6 +30,7 @@ export const sidebarSlice = createSlice({
             // Tắt trạng thái loading, lưu thông báo lỗi vào store
             state.isLoading = false;
             state.errorMessage = action.payload.message;
+            console.log(state.errorMessage)
         });
     },
 });

@@ -7,5 +7,6 @@ const path = {
     BLOGS: "/blogs",
     OUR_SERVICE: "/services",
     FAQ: "/faqs",
+    ERROR:"/error"
 };
 export default path;

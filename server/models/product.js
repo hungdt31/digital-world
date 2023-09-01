@@ -13,6 +13,10 @@ var productSchema = new mongoose.Schema({
         // unique:true,
         lowercase: true
     },
+    thumb:{
+        type:String,
+        default:"https://c.wallhere.com/photos/12/ad/1920x1080_px_camera_technology-1232375.jpg!d"
+    },
     description:{
         type:Array,
         required:true
@@ -38,11 +42,28 @@ var productSchema = new mongoose.Schema({
         default:0
     },
     images:{
-        type: Array
+        type: Array,
+        default:[
+            "http://media.doisongphapluat.com/529/2019/6/24/may-tinh-bang.jpg",
+            "https://cdn.mos.cms.futurecdn.net/6t8Zh249QiFmVnkQdCCtHK.jpg",
+            "https://cdn.pixabay.com/photo/2017/07/02/16/56/iphone-2464968_1280.png"
+        ]
     },
     color:{
-        type: String,
-        require: true
+        type: Array,
+        default:[
+            "Black",
+            "White"
+        ]
+    },
+    internal:{
+        type:Array
+    },
+    ram:{
+        type:Array
+    },
+    informations:{
+        type:Object
     },
     ratings:[
         {
