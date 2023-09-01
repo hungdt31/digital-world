@@ -213,3 +213,88 @@ button.slick-prev::before {
 .product:hover>.option {
     display: block;
 }
+
+/*****Collections*****/
+.collection {
+    z-index: 1;
+    position: relative;
+}
+
+.collection:hover.collection::before {
+    display: block;
+    animation: col 1s forwards;
+}
+
+.collection:hover.collection::after {
+    display: block;
+    animation: col 1s forwards;
+}
+
+.collection::before {
+    z-index: 3;
+    content: '';
+    position: absolute;
+    display: none;
+    top: 0;
+    opacity: 0.3;
+    background-color: #ee9999;
+}
+
+.collection::after {
+    right: 0;
+    z-index: 3;
+    content: '';
+    position: absolute;
+    display: none;
+    bottom: 0;
+    opacity: 0.3;
+    background-color: #ee9999;
+}
+
+@keyframes col {
+    0% {
+
+        width: 30%;
+        height: 30%;
+    }
+
+    100% {
+
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/**********/
+.price {
+    position: relative;
+}
+
+.usdPrice {
+    background-color: #333;
+    padding: 5px;
+    top: 0px;
+    color: #fff;
+    left: 150px;
+    display: none;
+    position: absolute;
+}
+
+.vndPrice:hover~.usdPrice {
+    display: block;
+}
+
+.bounce-once {
+    animation: bounceOnce 1s ease-in-out;
+}
+
+@keyframes bounceOnce {
+
+    0%{
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}

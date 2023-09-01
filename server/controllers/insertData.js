@@ -4,6 +4,7 @@ const categoryData = require("../../data/cate_brand")
 const data = require('../../data/data2.json')
 const asyncHandler = require("express-async-handler");
 const slugify = require('slugify')
+const convertToVND = require('../utils/convertNumber')
 
 const fn = async(product) => {
     await Product.create({
@@ -12,7 +13,7 @@ const fn = async(product) => {
         slug: slugify(product?.name) + '-'+Math.round(Math.random()*1000),
         description: product?.description,
         brand: product?.brand,
-        price: Math.round(Number(product?.price?.match(/\d/g).join(''))/100),
+        price: convertToVND(product?.price),
         category: product?.category[1],
         quantity: Math.round(Math.random() * 1000),
         sold: Math.round(Math.random()*100),

@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import convertMoney from "../ultils/convertMoney";
+import {convertVNDToUSDString, convertVNDtoVNDString} from '../ultils/convertMoney'
 import checkStars from "../ultils/starHelper";
 import icons from "../ultils/icons";
 import Options from "./Options";
 const Product = ({ productData }) => {
     const { AiFillStar, AiOutlineStar } = icons;
-    const [price, setPrice] = useState(null);
+    const [priceVND, setPriceVND] = useState(null);
+    const [priceUSD, setPriceUSD] = useState(null);
     const [label, setLabel] = useState("");
     const [star, setStar] = useState(null);
     useEffect(() => {
         setStar(checkStars(productData.totalRatings));
-        const convertedPrice = convertMoney(productData.price);
-        setPrice(convertedPrice);
+        setPriceVND(convertVNDtoVNDString(productData.price));
+        setPriceUSD(convertVNDToUSDString(productData.price,23000));
         setLabel(getRandomLabel());
     }, [productData.price]);
 
@@ -40,7 +41,7 @@ const Product = ({ productData }) => {
                 className="w-full object-contain"
                 alt={productData.title}
             />
-            <h3>{productData.title}</h3>
+            <h3 className="hover:text-main">{productData.title}</h3>
             <div className="flex">
                 {star?.map((el, index) => (
                     <div key={index}>
@@ -52,7 +53,10 @@ const Product = ({ productData }) => {
                     </div>
                 ))}
             </div>
-            <h4>{price}</h4>
+            <div className="price">
+                <h4 className="vndPrice">{priceVND}</h4>
+                <h3 className="usdPrice">{priceUSD}</h3>
+            </div>
             {label.name ? (
                 <span className={`tag-wrap relative `}>
                     <span className={`tag ${label?.color} pl-2`}>
