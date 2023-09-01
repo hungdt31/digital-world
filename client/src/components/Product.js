@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {convertVNDToUSDString, convertVNDtoVNDString} from '../ultils/convertMoney'
-import checkStars from "../ultils/starHelper";
+import CheckStars from "../ultils/starHelper";
 import icons from "../ultils/icons";
 import Options from "./Options";
 const Product = ({ productData }) => {
@@ -8,9 +8,7 @@ const Product = ({ productData }) => {
     const [priceVND, setPriceVND] = useState(null);
     const [priceUSD, setPriceUSD] = useState(null);
     const [label, setLabel] = useState("");
-    const [star, setStar] = useState(null);
     useEffect(() => {
-        setStar(checkStars(productData.totalRatings));
         setPriceVND(convertVNDtoVNDString(productData.price));
         setPriceUSD(convertVNDToUSDString(productData.price,23000));
         setLabel(getRandomLabel());
@@ -42,17 +40,11 @@ const Product = ({ productData }) => {
                 alt={productData.title}
             />
             <h3 className="hover:text-main">{productData.title}</h3>
-            <div className="flex">
-                {star?.map((el, index) => (
-                    <div key={index}>
-                        {el ? (
-                            <AiFillStar className="text-yellow-500" />
-                        ) : (
-                            <AiOutlineStar />
-                        )}
-                    </div>
-                ))}
+            <div className="flex justify-between">
+                <CheckStars number={productData?.totalRatings}/>
+                <div className="font-light text-[14px]">Sold: {productData.sold}</div>
             </div>
+            
             <div className="price">
                 <h4 className="vndPrice">{priceVND}</h4>
                 <h3 className="usdPrice">{priceUSD}</h3>
@@ -67,7 +59,7 @@ const Product = ({ productData }) => {
             ) : (
                 ""
             )}
-            <div class="option">
+            <div className="option">
                 <Options />
             </div>
         </div>

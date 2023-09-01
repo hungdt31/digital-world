@@ -30,11 +30,11 @@ const Options = () => {
                         onMouseEnter={() => setHoveredText(el.text)}
                         onMouseLeave={() => setHoveredText(null)}
                     >
-                        <div className="bounce-once bg-white border border-black rounded-full flex justify-center items-center w-[40px] h-[40px] hover:bg-slate-500 hover:text-white cursor-pointer">
+                        <div className="bounce-once bg-white border border-black rounded-full flex justify-center items-center w-[40px] h-[40px] hover:bg-slate-400 hover:text-white cursor-pointer">
                             {el.icon}
                         </div>
                         {hoveredText === el.text && (
-                            <p className="absolute top-0 w-[150px] block border px-3 py-2 left-11 bg-slate-500 text-white opacity-60">{el.text}</p>
+                            <p className="absolute top-0 w-[150px] block border px-3 py-2 left-11 bg-slate-400 text-white opacity-80 option-label">{el.text}</p>
                         )}
                     </div>
                 ))
