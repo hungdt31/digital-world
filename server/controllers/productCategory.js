@@ -27,8 +27,15 @@ const deleteCategory = asyncHandler(async(req, res)=>{
         deletedCategory: response ? response : 'Cannot delete product-category'
     })
 })
+const deleteAllCategory = asyncHandler(async(req, res)=>{
+    const response = await ProductCategory.deleteMany({})
+    return res.status(200).json({
+        success: response ? true : false,
+        deletedCategory: response ? 'Delete success' : 'Cannot delete product-category'
+    })
+})
 const getCategories = asyncHandler(async(req, res)=>{
-    const response = await ProductCategory.find().select('_id title')
+    const response = await ProductCategory.find()
     return res.status(200).json({
         success: response ? true : false,
         productCategories: response ? response : 'Cannot get categories'
@@ -38,5 +45,6 @@ module.exports = {
     createCategory,
     getCategories,
     deleteCategory,
-    updateCategory
+    updateCategory,
+    deleteAllCategory
 }

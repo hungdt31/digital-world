@@ -4,7 +4,7 @@ export const sidebarSlice = createSlice({
     name: "sidebar",
     initialState: {
         categories: null,
-        isLoading: true
+        isLoading: true,
     },
     reducers: {
         print: (state, action) => {

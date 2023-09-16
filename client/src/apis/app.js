@@ -1,5 +1,5 @@
 import axios from "../axios";
-import ErrorPage from "../pages/public/ErrorPage";
+
 export const apiGetCategories = async() => {
     try {
         return await axios({
@@ -21,6 +21,20 @@ export const apiGetProducts = async(params) => {
             url: '/product',
             method: 'get',
             params
+        })
+        // Work with the response...
+    } catch (err) {
+        // Handle error
+        // console.log(err.message)
+        return Promise.reject(err);
+    }
+    
+}
+export const apiGetProduct = async(pid) => {
+    try {
+        return await axios({
+            url: `/product/${pid}`,
+            method: 'get',
         })
         // Work with the response...
     } catch (err) {

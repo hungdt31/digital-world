@@ -13,6 +13,13 @@ var productCategorySchema = new mongoose.Schema(
             type: Array,
             required: true,
         },
+        icon:{
+            type:String
+        },
+        image:{
+            type:String,
+            default:"https://c.wallhere.com/photos/12/ad/1920x1080_px_camera_technology-1232375.jpg!d"
+        }
     },
     {
         timestamps: true,

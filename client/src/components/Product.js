@@ -3,6 +3,8 @@ import {convertVNDToUSDString, convertVNDtoVNDString} from '../ultils/convertMon
 import CheckStars from "../ultils/starHelper";
 import icons from "../ultils/icons";
 import Options from "./Options";
+import { Link } from "react-router-dom";
+import path from "../ultils/path";
 const Product = ({ productData }) => {
     const { AiFillStar, AiOutlineStar } = icons;
     const [priceVND, setPriceVND] = useState(null);
@@ -34,12 +36,16 @@ const Product = ({ productData }) => {
 
     return (
         <div className="h-[400px] product transition duration-2000 ease-in-out hover:shadow-2xl p-3 flex flex-col justify-between">
-            <img
-                src={productData.thumb}
-                className="w-full object-contain"
-                alt={productData.title}
-            />
-            <h3 className="hover:text-main">{productData.title}</h3>
+            <Link to={`/${path.DETAIL_PRODUCT}/${productData._id}/${productData.slug}`}>
+                <img
+                    src={productData.thumb}
+                    className="w-full object-contain"
+                    alt={productData.title}
+                />
+            </Link>
+            <Link to={`/${path.DETAIL_PRODUCT}/${productData._id}/${productData.slug}`}>
+                <h3 className="hover:text-main">{productData.title}</h3>
+            </Link>
             <div className="flex justify-between">
                 <CheckStars number={productData?.totalRatings}/>
                 <div className="font-light text-[14px]">Sold: {productData.sold}</div>

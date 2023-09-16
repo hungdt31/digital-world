@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Route, Routes } from "react-router-dom";
 import path from "./ultils/path";
 import Public from "./pages/public/Public";
-import { Home, Login } from "./pages/public";
+import { Home, Login, Products, Services, FAQ, DetailProduct, Blogs} from "./pages/public";
 import ErrorPage from "./pages/public/ErrorPage";
 const App = () => {
     return (
@@ -10,9 +10,14 @@ const App = () => {
             <Routes>
             <Route path={path.PUBLIC} element={<Public />}>
                 <Route path={path.HOME} element={<Home />}></Route>
-                <Route path={path.LOGIN} element={<Login />}></Route>
+                <Route path={path.BLOGS} element={<Blogs />}></Route>
+                <Route path={path.FAQ} element={<FAQ/>}></Route>
+                <Route path={path.OUR_SERVICE} element={<Services/>}></Route>
+                <Route path={path.PRODUCTS} element={<Products/>}></Route>
+                <Route path={path.DETAIL_PRODUCT_PID_TITLE} element={<DetailProduct/>}></Route>
             </Route>
             <Route path={path.ERROR} element={<ErrorPage />}></Route>
+            <Route path={path.LOGIN} element={<Login />}></Route>
         </Routes>
         </div>
     );

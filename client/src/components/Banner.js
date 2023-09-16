@@ -6,7 +6,7 @@ const Banner = () => {
         <div className="relative">
             <img
                 src={img}
-                className="w-full object-fill h-[500px] img-banner "
+                className="w-full object-fill h-[450px] img-banner "
                 alt="banner"
             />
             <div className="flex h-full w-full absolute top-0 justify-center items-center text-center">

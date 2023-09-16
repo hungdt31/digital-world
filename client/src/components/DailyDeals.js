@@ -7,29 +7,41 @@ import {
     convertVNDtoVNDString,
 } from "../ultils/convertMoney";
 import CountDown from "./CountDown";
-
+import { useNavigate } from "react-router-dom";
+import moment from 'moment';
+import { secondsToHms } from "../ultils/helper";
 const DailyDeals = () => {
+    const navigate = useNavigate()
     const [deal, setDeal] = useState(null);
     const [hour, setHour] = useState(0);
     const [minute, setMinute] = useState(0);
-    const [second, setSecond] = useState(20);
+    const [second, setSecond] = useState(0);
     const [hook, setHook] = useState(false);
     const fetchOneProduct = async () => {
-        
-        const response = await apiGetProducts({
-            totalRatings: 5
-        });
-        const randomNum = Math.round(Math.random() * (response.data.counts - 1))
-        if(response.data.success){
-            setDeal(response.data.products[`${randomNum}`]);
+        try{
+            const response = await apiGetProducts({
+                totalRatings: 5
+            });
+            const randomNum = Math.round(Math.random() * (response.data.counts - 1))
+            if(response.data.success){
+                setDeal(response.data.products[`${randomNum}`]);
+                const today = `${moment().format('MM/DD/YYYY')} 00:00:00`
+                console.log(new Date(today).getTime())
+                const seconds = new Date(today).getTime() - new Date().getTime() + 24 * 3600 * 1000
+                // console.log(seconds)
+                const number = secondsToHms(seconds)
+                setHour(number.h)
+                setMinute(number.m)
+                setSecond(number.s)
+            }
+            console.log(response)
         }
-        console.log(response)
+        catch(error){
+            navigate('/error',{state:{error: error.message}});
+        }
     };
     useEffect(() => {
         fetchOneProduct();
-        setHour(0)
-        setMinute(0)
-        setSecond(20)
     }, [hook]);
     useEffect(() => {
         const interval = setInterval(() => {
@@ -41,10 +53,10 @@ const DailyDeals = () => {
                     }
                     else{
                         setHour(prev => prev - 1)
-                        setMinute(0)
+                        setMinute(59)
                     }
                 }
-                setSecond(0);
+                setSecond(59);
             } else {
                 setSecond((prev) => prev - 1);
             }
@@ -62,16 +74,19 @@ const DailyDeals = () => {
                 <span></span>
             </div>
             <div className="flex flex-col items-center gap-3">
-                <img src={deal?.thumb} />
+                <img src={deal?.thumb} className="mt-5"/>
                 <h2>{deal?.title}</h2>
-                <CheckStars number={deal?.totalRatings} />
-                <p>{convertVNDtoVNDString(`${deal?.price}`)}</p>
+                <CheckStars number={deal?.totalRatings} size={28}/>
+                <div className="price mt-3">
+                    <h4 className="vndPrice">{convertVNDtoVNDString(`${deal?.price}`)}</h4>
+                    <h3 className="usdPrice">{convertVNDToUSDString(`${deal?.price}`,23000)}</h3>
+                </div>
                 <div className="flex justify-between gap-2 w-full">
                     <CountDown type="Hours" number={hour} />
                     <CountDown type="Minutes" number={minute} />
                     <CountDown type="Seconds" number={second} />
                 </div>
-                <button className="bg-main text-white w-full uppercase p-2 text-center flex items-center justify-center gap-2">
+                <button className="bg-main text-white w-full uppercase p-2 text-center flex items-center justify-center gap-2 hover:bg-red-400">
                     <FiAlignJustify />
                     <span>Options</span>
                 </button>
