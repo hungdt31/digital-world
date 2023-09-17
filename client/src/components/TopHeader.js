@@ -1,5 +1,6 @@
 import React from 'react'
 import icons from '../ultils/icons'
+import path from '../ultils/path'
 const TopHeader = () => {
     const {AiFillFacebook, AiFillGoogleCircle, BsInstagram, BsPinterest} = icons
     const icon = [
@@ -16,7 +17,7 @@ const TopHeader = () => {
                     <div className='px-2'>VND</div>
                 </div>
                 <div className='flex items-center gap-3'>
-                    <p className='hover:text-slate-200 cursor-pointer'>Sign In or Create Account</p>
+                    <a href={path.LOGIN} className='hover:text-slate-200 cursor-pointer'>Sign In or Create Account</a>
                     {
                         icon?.map((el)=>{
                             return el

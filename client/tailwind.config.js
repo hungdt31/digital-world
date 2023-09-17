@@ -24,6 +24,17 @@ module.exports = {
                         transform: "translateX(0px)",
                     },
                 },
+                scaleUpVerCenter: {
+                    "0%": {
+                        transform: "scaleY(0.4)",
+                    },
+                    "100%": {
+                        transform: "scaleY(1)",
+                    }
+                }
+            },
+            screens: {
+                'medium': '500px',
             },
         },
         plugins: [],

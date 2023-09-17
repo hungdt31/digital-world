@@ -2,8 +2,8 @@ import React, { useEffect, useState, memo } from "react";
 import { slugify } from "../ultils/helper";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../store/asyncAction";
-import { print } from "../store/sidebarSlice";
+import { getCategories } from "../store/products/asyncAction";
+// import { print } from "../store/products/sidebarSlice";
 import { apiGetProducts } from "../apis";
 import icons from "../ultils/icons";
 
