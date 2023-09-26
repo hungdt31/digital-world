@@ -1,6 +1,6 @@
-import {BsFillTelephoneInboundFill, BsFillBagPlusFill, BsInstagram, BsPinterest, BsFillGiftFill, BsPhoneVibrateFill} from 'react-icons/bs'
+import {BsFillTelephoneInboundFill, BsFillBagPlusFill, BsInstagram, BsPinterest, BsFillGiftFill, BsPhoneVibrateFill, BsFillEyeFill} from 'react-icons/bs'
 import {SlEnvolopeLetter} from 'react-icons/sl'
-import {AiOutlineHeart, AiOutlineStar,AiFillStar, AiOutlineAlignLeft, AiFillHeart, AiFillFacebook, AiFillGoogleCircle, AiOutlineCaretLeft} from 'react-icons/ai'
+import {AiOutlineHeart, AiOutlineStar,AiFillStar, AiOutlineAlignLeft, AiFillHeart, AiFillFacebook, AiFillGoogleCircle, AiOutlineCaretLeft, AiTwotoneEyeInvisible} from 'react-icons/ai'
 import {BiSolidUserCircle} from 'react-icons/bi'
 import {FaEye, FaShieldAlt, FaTruckFast} from 'react-icons/fa'
 import {SiDailymotion,SiTiktok } from 'react-icons/si'
@@ -46,3 +46,7 @@ export const mxhIcons = [
     <RiLinkedinFill/>,
     <SiTiktok/>
 ]
+export const forgotPasswordIcons = {
+    AiTwotoneEyeInvisible,
+    BsFillEyeFill
+}

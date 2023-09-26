@@ -33,9 +33,13 @@ const CustomSlider = () => {
         slidesToScroll: 1,
     };
     const fn = async () => {
-        const response = await apiGetProducts({ category: "Smartphone" });
-        console.log(response);
-        setSlider(response.data.products);
+        try{
+            const response = await apiGetProducts({ category: "Smartphone" });
+            console.log(response);
+            setSlider(response.data.products);
+        } catch(error){
+            console.log(error.message)
+        }
     };
     useEffect(() => {
         fn();
@@ -57,9 +61,6 @@ const CustomSlider = () => {
                                     <h4 className="vndPrice cursor-pointer">
                                         {convertVNDtoVNDString(el.price)}
                                     </h4>
-                                    <h3 className="usdPrice">
-                                        {convertVNDToUSDString(el.price, 23000)}
-                                    </h3>
                                 </div>
                             </div>
                             <div className="customItem">
@@ -87,10 +88,10 @@ const CustomSlider = () => {
                                                     onMouseLeave={() => {
                                                         setText(null);
                                                     }}
-                                                    className="rounded-full border-[1px] p-3 cursor-pointer hover:text-white hover:bg-black flex justify-center items-center "
+                                                    className={`rounded-full border-[1px] p-3 cursor-pointer hover:text-white hover:bg-black flex justify-center items-center  ${text === el.text ? '' : 'animate-[widthChange_0.3s_ease-in-out]'}`}
                                                 >
                                                     {el.icon}
-                                                    {text == el.text ? (
+                                                    {text === el.text ? (
                                                         <div className="text-[12px] animate-[slideRight_0.5s_ease-in-out] mx-3">
                                                             {el.text}
                                                         </div>

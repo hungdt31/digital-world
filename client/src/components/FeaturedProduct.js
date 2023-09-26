@@ -8,11 +8,16 @@ import path from "../ultils/path";
 const FeaturedProduct = () => {
     const [products, setProducts] = useState([]);
     const fProduct = async () => {
-        const res = await apiGetProducts({
-            page: 6,
-            limit: 9,
-        });
-        setProducts(res.data.products);
+        try{
+            const res = await apiGetProducts({
+                page: 6,
+                limit: 9,
+            });
+            setProducts(res.data.products);
+        }
+        catch(error){
+            console.log(error.message)
+        }
     };
     useEffect(() => {
         fProduct();

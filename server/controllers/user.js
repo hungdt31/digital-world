@@ -7,23 +7,65 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const sendMail = require("../utils/sendMail");
 const asyncHandler = require("express-async-handler");
+const tempUser = require("../models/tempUser");
+const uniqid = require("uniqid");
+const validator = require('validator');
 const register = asyncHandler(async (req, res) => {
-    const { email, password, firstname, lastname } = req.body;
-    if (!email || !password || !firstname || !lastname)
+    const { email, password, firstname, lastname, mobile } = req.body;
+    if (!email || !password || !firstname || !lastname || !mobile)
         return res.status(400).json({
             success: false,
             mess: "Missing inputs",
         });
+    if(validator.isEmail(email) == false) throw new Error("Gmail is invalid");
     const user = await User.findOne({ email });
     if (user) throw new Error("User has existed ! Try again ...");
-    else {
-        const newUser = await User.create(req.body);
-        return res.status(200).json({
-            success: newUser ? true : false,
-            mess: newUser
-                ? "Register is successfully. Please go login"
-                : "Something went wrong",
+    const token = uniqid(email, password, firstname, lastname, mobile);
+    const savedTempUser = await tempUser.create({
+        email,
+        password,
+        firstname,
+        lastname,
+        mobile,
+        token,
+    });
+    // console.log(savedTempUser);
+    const html = `Xin vui long click vao link duoi day de xac nhan dang ky. Link nay se het han sau 5 phut ke tu bay gio <a href=${process.env.URL_SERVER}/api/user/finalRegister/${token}>Click here</a>`;
+    const topic = "Xac nhan dang ky";
+    const data = {
+        email,
+        html,
+        topic,
+    };
+    const rs = await sendMail(data)
+    console.log(rs)
+    setTimeout(() => {
+        savedTempUser.delete({ token });
+    }, 5 * 60 * 1000);
+    return res.status(200).json({
+        success: rs ? true : false,
+        mess: "Vui lòng check mail"
+    })
+});
+const finalRegister = asyncHandler(async (req, res) => {
+    const { token } = req.params;
+    const findUser = await tempUser.findOne({ token });
+    const { email, password, firstname, lastname, mobile } = findUser;
+    if (findUser) {
+        const newUser = await User.create({
+            email,
+            password,
+            firstname,
+            lastname,
+            mobile,
         });
+        if (newUser) {
+            res.redirect(`${process.env.CLIENT_URL}/finalRegister/success`);
+        } else {
+            res.redirect(`${process.env.CLIENT_URL}/finalRegister/failed`);
+        }
+    } else {
+        res.redirect(`${process.env.CLIENT_URL}/finalRegister/failed`);
     }
 });
 const getUsers = asyncHandler(async (req, res) => {
@@ -169,7 +211,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
     // method khi duoc model dung phai save lai
     const resetToken = user.createPasswordChangedToken();
     await user.save();
-    const html = `Xin vui long click vao link duoi day de thay doi mat khau cua ban. Link nay se het han sau 15 phut ke tu bay gio <a href=${process.env.URL_SERVER}/api/user/reset-password/${resetToken}>Click here</a>`;
+    const html = `Xin vui long click vao link duoi day de thay doi mat khau cua ban. Link nay se het han sau 15 phut ke tu bay gio <a href=${process.env.CLIENT_URL}/resetpassword/${resetToken}>Click here</a>`;
     const data = {
         email,
         html,
@@ -292,5 +334,6 @@ module.exports = {
     updateUserByAdmin,
     updateUserAddress,
     updateCart,
+    finalRegister,
 };
 // callback trong express hỗ trợ promise try catch

@@ -14,7 +14,7 @@ const DetailProduct = () => {
     const fn = async (pid) => {
         const response = await apiGetProduct(pid);
         console.log(response.data.productData);
-        setProduct(response.data.productData);
+        setProduct(response?.data?.productData);
     };
     useEffect(() => {
         fn(pid);

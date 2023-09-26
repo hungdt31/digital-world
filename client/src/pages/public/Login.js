@@ -9,9 +9,12 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { register } from "../../store/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import ForgotPassword from "./ForgotPassword";
 const Login = () => {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [isForgotPassword, setIsForgotPassword] = useState(false);
     const [account, setAccount] = useState({
         firstname: "",
         email: "",
@@ -28,8 +31,26 @@ const Login = () => {
             email: "",
             password: "",
             lastname: "",
-            moblie: "",
+            mobile: "",
         });
+    };
+    const handleSignUp = async () => {
+        setIsLoading(true); // Bắt đầu hiển thị hiệu ứng loading
+        const rs = await signUp(account);
+        if (rs?.data?.success) {
+            Swal.fire({
+                title: "Thông báo",
+                icon: "success",
+                text: "Vui lòng kiểm tra email",
+            });
+        } else {
+            Swal.fire({
+                title: "Thông báo",
+                icon: "info",
+                text: rs.data.mess,
+            });
+        }
+        setIsLoading(false);
     };
     const handleSubmit = async () => {
         if (isRegister) {
@@ -40,25 +61,33 @@ const Login = () => {
                 Swal.fire({
                     title: "Oops ...",
                     icon: "error",
-                    text: "Vui lòng điền đầy đủ email và mật khẩu.",
+                    text: "Vui lòng điền đầy đủ email và password.",
                 });
                 return; // Dừng việc thực hiện yêu cầu nếu dữ liệu trống
             }
             const response = await login(data);
-            console.log(response)
+            console.log(response);
             if (response?.data?.success)
                 Swal.fire({
                     title: "Congraluation",
                     icon: "success",
                     text: response.data.mess,
-                }).then(()=>{
-                    dispatch(register({
-                        isLoggedIn: true,
-                        token: response.data.accessToken,
-                        userData: response.data
-                    }))
-                    navigate(`${path.HOME}`)
-                })
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showCancelButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                }).then(async () => {
+                    dispatch(
+                        register({
+                            isLoggedIn: true,
+                            token: response.data.accessToken,
+                            userData: response.data,
+                        })
+                    );
+                    window.location.href = path.HOME;
+                });
             else
                 Swal.fire({
                     title: "Oops ...",
@@ -68,22 +97,51 @@ const Login = () => {
             console.log(response);
         } else {
             // alert(JSON.stringify(account, null, 2))
-            const response = await signUp(account);
-            if (response.data.success)
-                Swal.fire({
-                    title: "Congraluation",
-                    icon: "success",
-                    text: response.data.mess,
-                }).then(() => {
-                    resetPayload(true);
-                });
-            else
+            if (
+                !account.email ||
+                !account.firstname ||
+                !account.lastname ||
+                !account.password ||
+                !account.mobile
+            ) {
+                // Kiểm tra xem email hoặc mật khẩu có bị trống không
+                const missing = [];
+
+                if (!account.email) {
+                    missing.push("email");
+                }
+                if (!account.firstname) {
+                    missing.push("firstname");
+                }
+                if (!account.lastname) {
+                    missing.push("lastname");
+                }
+                if (!account.password) {
+                    missing.push("password");
+                }
+                if (!account.mobile) {
+                    missing.push("mobile");
+                }
+
+                const missingFieldsText = missing
+                    .map((field) => field)
+                    .join(", ");
                 Swal.fire({
                     title: "Oops ...",
                     icon: "error",
-                    text: response.data.mess,
+                    text: `Vui lòng điền đầy đủ thông tin ${missingFieldsText}`,
                 });
-            console.log(response);
+                return; // Dừng việc thực hiện yêu cầu nếu dữ liệu trống
+            }
+            // Thực hiện đăng ký và xử lý sau khi hoàn thành
+            // const rs = await signUp(account)
+            // Swal.fire({
+            //     title: "Thông báo",
+            //     icon: "info",
+            //     text: rs.data.success ? "Vui lòng kiểm tra email" : rs.data.mess,
+            // });
+            // setIsLoading(false);
+            handleSignUp();
         }
     };
     return (
@@ -97,81 +155,101 @@ const Login = () => {
             </NavLink>
             <img src={img} className="w-full h-full object-cover" />
             <div className="flex justify-center items-center absolute top-0 w-full h-full z-40">
-                <div className="rounded-lg bg-white top-1/3 p-3 left-1/4 lg:w-1/3 min-h-[350px] w-[75%]">
-                    <p className="text-main text-[20px] uppercase font-bold text-center">
-                        {isRegister ? "Sign In" : "Sign Up"}
-                    </p>
-                    <div className="flex flex-col gap-4 p-5">
-                        {!isRegister && (
-                            <div className="flex gap-3">
-                                <InputField
-                                    type="firstname"
-                                    accountValue={setAccount}
-                                    value={account.firstname}
-                                />
-                                <InputField
-                                    type="lastname"
-                                    accountValue={setAccount}
-                                    value={account.lastname}
-                                />
-                            </div>
-                        )}
-                        <InputField
-                            type="email"
-                            value={account.email}
-                            accountValue={setAccount}
-                        />
-                        {!isRegister && (
+                {!isForgotPassword && (
+                    <div className="rounded-lg bg-white top-1/3 p-3 left-1/4 lg:w-1/3 min-h-[350px] w-[75%] animate-[slideRight_0.3s_ease-in-out]">
+                        <p className="text-main text-[20px] uppercase font-bold text-center">
+                            {isRegister ? "Sign In" : "Sign Up"}
+                        </p>
+                        <div className="flex flex-col gap-4 p-5">
+                            {!isRegister && (
+                                <div className="flex gap-3">
+                                    <InputField
+                                        type="firstname"
+                                        accountValue={setAccount}
+                                        value={account.firstname}
+                                    />
+                                    <InputField
+                                        type="lastname"
+                                        accountValue={setAccount}
+                                        value={account.lastname}
+                                    />
+                                </div>
+                            )}
                             <InputField
-                                name="phone"
-                                type="mobile"
-                                value={account.mobile}
+                                type="email"
+                                value={account.email}
                                 accountValue={setAccount}
                             />
-                        )}
-                        <InputField
-                            type="password"
-                            value={account.password}
-                            accountValue={setAccount}
-                        />
-                        <button
-                            className="bg-main p-3 rounded-full w-full text-white font-semibold active:bg-red-400 hover:opacity-80 mt-3"
-                            onClick={() => {
-                                handleSubmit();
-                            }}
-                        >
-                            Submit
-                        </button>
-                        <div className="flex justify-between min-[500px]:flex-row flex-col">
-                            {isRegister && (
-                                <div className="cursor-pointer underline text-red-400">
-                                    Forgot Password
-                                </div>
-                            )}
                             {!isRegister && (
-                                <div
-                                    onClick={() => {
-                                        resetPayload(true);
-                                    }}
-                                    className="cursor-pointer flex items-center gap-2 text-red-400"
-                                >
-                                    <MdKeyboardReturn />{" "}
-                                    <div className="underline">Go to login</div>
-                                </div>
+                                <InputField
+                                    type="mobile"
+                                    value={account.mobile}
+                                    accountValue={setAccount}
+                                />
                             )}
-                            {isRegister && (
-                                <div
-                                    className="cursor-pointer underline text-red-400"
+                            <InputField
+                                type="password"
+                                value={account.password}
+                                accountValue={setAccount}
+                            />
+                            {isLoading ? (
+                                <p className="animate-bounce font-thin text-main">
+                                    Loading ...
+                                </p>
+                            ) : (
+                                <button
+                                    className="bg-main p-3 rounded-full w-full text-white font-semibold active:bg-red-400 hover:opacity-80 mt-3"
                                     onClick={() => {
-                                        resetPayload(false);
+                                        handleSubmit();
                                     }}
                                 >
-                                    Create New Account
-                                </div>
+                                    Submit
+                                </button>
                             )}
+                            <div className="flex justify-between min-[500px]:flex-row flex-col">
+                                {isRegister && (
+                                    <div
+                                        onClick={() => {
+                                            setIsForgotPassword(true);
+                                        }}
+                                        className="cursor-pointer underline text-red-400"
+                                    >
+                                        Forgot Password
+                                    </div>
+                                )}
+                                {!isRegister && (
+                                    <div
+                                        onClick={() => {
+                                            resetPayload(true);
+                                        }}
+                                        className="cursor-pointer flex items-center gap-2 text-red-400"
+                                    >
+                                        <MdKeyboardReturn />{" "}
+                                        <div className="underline">
+                                            Go to login
+                                        </div>
+                                    </div>
+                                )}
+                                {isRegister && (
+                                    <div
+                                        className="cursor-pointer underline text-red-400"
+                                        onClick={() => {
+                                            resetPayload(false);
+                                        }}
+                                    >
+                                        Create New Account
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
+                {isForgotPassword && (
+                    <ForgotPassword
+                        isForgotPassword={isForgotPassword}
+                        setIsForgotPassword={setIsForgotPassword}
+                    />
+                )}
             </div>
         </div>
     );

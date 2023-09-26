@@ -19,7 +19,7 @@ const InputField = ({ type, accountValue, value }) => {
             <input
                 value={value}
                 type={type || "text"}
-                className="border-2 p-2 w-full placeholder:italic"
+                className="border-[1px] p-2 w-full placeholder:italic"
                 id="input"
                 placeholder={type}
                 onChange={handleChange}

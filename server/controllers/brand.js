@@ -38,7 +38,7 @@ const getBrand = asyncHandler(async (req, res) => {
     const response = await Brand.find().select("_id title");
     return res.status(200).json({
         success: response ? true : false,
-        Brand: response ? response : "Cannot get brand",
+        brand: response ? response : "Cannot get brand",
     });
 });
 module.exports = {

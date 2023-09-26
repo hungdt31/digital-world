@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import icons from "../ultils/icons";
 import { Link } from "react-router-dom";
 import path from "../ultils/path";
-
+import { apiGetCurrentUser } from "../apis/user";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
     const {
         BsFillTelephoneInboundFill,
@@ -12,6 +13,30 @@ const Header = () => {
         AiOutlineHeart,
         BiSolidUserCircle,
     } = icons;
+    const [name, setName] = useState(null);
+    const navigate = useNavigate();
+    const handleStorageChange = async () => {
+        try {
+            const temp = JSON.parse(
+                JSON.parse(window.localStorage.getItem("persist:shop/user"))
+                    .token
+            );
+            var user;
+            if (temp) {
+                user = await apiGetCurrentUser(temp);
+                if(user.data.mess.lastname)
+                setName(
+                    user.data.mess.firstname + " " + user.data.mess.lastname
+                );
+                // console.log(user);
+            }
+        } catch (error) {
+            // navigate("/error", { state: { error: error.message } });
+        }
+    };
+    useEffect(() => {
+        handleStorageChange();
+    }, []);
     return (
         <div className="w-3/4 border-bottom h-[110px] py-[35px] flex justify-between items-center">
             <Link to={`${path.HOME}`}>
@@ -41,10 +66,15 @@ const Header = () => {
                 <div className="px-4 flex items-center">
                     <AiOutlineHeart className="text-main" size={24} />
                 </div>
-                <div className="px-4 flex items-center gap-2">
+                <div className="px-4 flex items-center gap-3">
                     <BsFillBagPlusFill size={24} className="text-main" />
                     <div className="hover:text-main cursor-pointer">0 item</div>
-                    <BiSolidUserCircle size={30} className="ml-2" />
+                    <div className="flex items-center">
+                        <BiSolidUserCircle size={35} />
+                        <div>
+                            <p className="font-semibold">{name ? name : ""}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

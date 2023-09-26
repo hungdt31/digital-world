@@ -24,12 +24,28 @@ module.exports = {
                         transform: "translateX(0px)",
                     },
                 },
+                slideLeft: {
+                    "0%": {
+                        transform: "translateX(-100px)",
+                    },
+                    "100%": {
+                        transform: "translateX(0px)",
+                    },
+                },
                 scaleUpVerCenter: {
                     "0%": {
                         transform: "scaleY(0.4)",
                     },
                     "100%": {
                         transform: "scaleY(1)",
+                    }
+                },
+                widthChange:{
+                    "0%":{
+                        width:"200%",
+                    },
+                    "100%":{
+                        width:"100%",
                     }
                 }
             },

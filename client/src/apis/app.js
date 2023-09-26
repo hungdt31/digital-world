@@ -1,12 +1,12 @@
 import axios from "../axios";
 
-export const apiGetCategories = async() => {
+export const apiGetCategories = async () => {
     try {
         return await axios({
             url: '/productcategory',
             method: 'get'
         })
-    
+
         // Work with the response...
     } catch (err) {
         // Handle error
@@ -15,7 +15,7 @@ export const apiGetCategories = async() => {
     }
 }
 
-export const apiGetProducts = async(params) => {
+export const apiGetProducts = async (params) => {
     try {
         return await axios({
             url: '/product',
@@ -28,9 +28,9 @@ export const apiGetProducts = async(params) => {
         // console.log(err.message)
         return Promise.reject(err);
     }
-    
+
 }
-export const apiGetProduct = async(pid) => {
+export const apiGetProduct = async (pid) => {
     try {
         return await axios({
             url: `/product/${pid}`,
@@ -42,5 +42,5 @@ export const apiGetProduct = async(pid) => {
         // console.log(err.message)
         return Promise.reject(err);
     }
-    
+
 }

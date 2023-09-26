@@ -3,10 +3,15 @@ import { apiGetCategories } from "../apis";
 const HotCollection = () => {
     const [col, setCol] = useState([]);
     const fn = async () => {
-        const response = await apiGetCategories();
-        console.log(response);
-        const res = await response.data.productCategories.filter((el) => {return el.brand.length > 0})
-        setCol(res);
+        try{
+            const response = await apiGetCategories();
+            console.log(response);
+            const res = await response.data.productCategories.filter((el) => {return el.brand.length > 0})
+            setCol(res);
+        }
+        catch(error){
+            console.log(error.message)
+        }
     };
     useEffect(() => {
         fn();
