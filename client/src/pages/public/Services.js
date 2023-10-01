@@ -1,9 +1,10 @@
 import React from 'react'
+import TitleBanner from '../../components/TitleBanner'
 
 const Services = () => {
     return (
-        <div>
-            Services
+        <div className='w-full'>
+            <TitleBanner page={"Our Services"}/>
         </div>
     )
 }

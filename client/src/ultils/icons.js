@@ -5,10 +5,10 @@ import {BiSolidUserCircle} from 'react-icons/bi'
 import {FaEye, FaShieldAlt, FaTruckFast} from 'react-icons/fa'
 import {SiDailymotion,SiTiktok } from 'react-icons/si'
 import {MdOutlineViewDay, MdEmail, MdLocationOn, MdKeyboardReturn} from 'react-icons/md'
-import {FiAlignJustify} from 'react-icons/fi'
+import {FiAlignJustify, FiChevronDown, FiChevronUp} from 'react-icons/fi'
 import {ImTruck} from 'react-icons/im'
 import {GiReturnArrow} from 'react-icons/gi'
-import {RiLinkedinFill} from 'react-icons/ri'
+import {RiLinkedinFill,RiDeleteBin5Fill} from 'react-icons/ri'
 const icons = {
     AiOutlineCaretLeft,
     BsFillTelephoneInboundFill,
@@ -35,7 +35,10 @@ const icons = {
     BsPhoneVibrateFill,
     MdEmail,
     MdLocationOn,
-    MdKeyboardReturn
+    MdKeyboardReturn,
+    FiChevronDown,
+    FiChevronUp,
+    RiDeleteBin5Fill
 }
 export default icons
 export const mxhIcons = [

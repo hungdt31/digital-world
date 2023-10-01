@@ -73,6 +73,10 @@ const fn = async (product) => {
         ram: product?.variants?.find((el) => el.label === "Ram")?.variants,
         internal: product?.variants?.find((el) => el.label === "Internal")
             ?.variants,
+        capacity: product?.variants?.find((el) => el.label === "Capacity")
+            ?.variants,
+        size: product?.variants?.find((el) => el.label === "Size")
+            ?.variants,
         informations: product?.infomations,
         totalRatings: Math.round(Math.random() * 5),
     });

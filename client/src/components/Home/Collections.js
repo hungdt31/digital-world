@@ -1,6 +1,6 @@
 import React from 'react'
-import img1 from '../assets/banner1-home2_2000x_crop_center.avif'
-import img2 from '../assets/banner2-home2_2000x_crop_center.avif'
+import img1 from '../../assets/banner1-home2_2000x_crop_center.avif'
+import img2 from '../../assets/banner2-home2_2000x_crop_center.avif'
 
 const Collections = () => {
     return (

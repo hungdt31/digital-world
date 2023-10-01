@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import img from "../assets/slideshow3-home2_1920x.webp";
+import img from "../../assets/slideshow3-home2_1920x.webp";
 
 const Banner = () => {
     return (

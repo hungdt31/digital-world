@@ -42,7 +42,7 @@ module.exports = {
                 },
                 widthChange:{
                     "0%":{
-                        width:"200%",
+                        width:"250%",
                     },
                     "100%":{
                         width:"100%",

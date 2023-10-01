@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { apiGetCategories } from "../apis";
+import { apiGetCategories } from "../../apis";
 const HotCollection = () => {
     const [col, setCol] = useState([]);
     const fn = async () => {

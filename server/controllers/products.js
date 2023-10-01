@@ -22,6 +22,7 @@ const getProduct = asyncHandler(async(req, res) => {
 // filtering, sorting & pagination
 const getProducts = asyncHandler(async(req, res) => {
     const queries = {...req.query}
+    console.log(queries)
     // tách các trường đặc biệt ra khỏi query
     const excludeFields = ['limit','sort','page','fields']
     excludeFields.forEach(el => delete queries[el])
@@ -29,9 +30,13 @@ const getProducts = asyncHandler(async(req, res) => {
     let queryString = JSON.stringify(queries)
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`)
     const formatedQueries = JSON.parse(queryString)
-    // console.log(formatedQueries)
     // Filtering
     if (queries?.title) formatedQueries.title = {$regex: queries.title, $options: 'i'}
+    if (queries?.ram) formatedQueries.ram = {$all:queries.ram}
+    if (queries?.color) formatedQueries.color = {$all:queries.color}
+    if (queries?.internal) formatedQueries.internal = {$all:queries.internal}
+    if (queries?.capacity) formatedQueries.capacity = {$all:queries.capacity}
+    if (queries?.size) formatedQueries.size = {$all:queries.size}
     let queryCommand = Product.find(formatedQueries)
     // Sorting
     // abc,efg => [abc,efg] => abc efg

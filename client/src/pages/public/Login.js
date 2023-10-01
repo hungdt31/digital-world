@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import img from "../../assets/triangle-2724449_1280.png";
 import InputField from "../../components/InputField";
 import icons from "../../ultils/icons";
@@ -8,11 +8,9 @@ import { signUp, login } from "../../apis/user";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { register } from "../../store/user/userSlice";
-import { useNavigate } from "react-router-dom";
 import ForgotPassword from "./ForgotPassword";
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isForgotPassword, setIsForgotPassword] = useState(false);
     const [account, setAccount] = useState({
@@ -133,14 +131,6 @@ const Login = () => {
                 });
                 return; // Dừng việc thực hiện yêu cầu nếu dữ liệu trống
             }
-            // Thực hiện đăng ký và xử lý sau khi hoàn thành
-            // const rs = await signUp(account)
-            // Swal.fire({
-            //     title: "Thông báo",
-            //     icon: "info",
-            //     text: rs.data.success ? "Vui lòng kiểm tra email" : rs.data.mess,
-            // });
-            // setIsLoading(false);
             handleSignUp();
         }
     };
@@ -153,7 +143,7 @@ const Login = () => {
                 <AiOutlineCaretLeft />
                 Home
             </NavLink>
-            <img src={img} className="w-full h-full object-cover" />
+            <img src={img} className="w-full h-full object-cover" alt="BackGround"/>
             <div className="flex justify-center items-center absolute top-0 w-full h-full z-40">
                 {!isForgotPassword && (
                     <div className="rounded-lg bg-white top-1/3 p-3 left-1/4 lg:w-1/3 min-h-[350px] w-[75%] animate-[slideRight_0.3s_ease-in-out]">

@@ -1,17 +1,17 @@
 import React, { useEffect, useState, memo } from "react";
-import icons from "../ultils/icons";
-import { apiGetProducts } from "../apis";
-import CheckStars from "../ultils/starHelper";
+import icons from "../../ultils/icons";
+import { apiGetProducts } from "../../apis";
+import CheckStars from "../../ultils/starHelper";
 import {
     convertVNDToUSDString,
     convertVNDtoVNDString,
-} from "../ultils/convertMoney";
-import CountDown from "./CountDown";
+} from "../../ultils/convertMoney";
+import CountDown from "../CountDown";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import { secondsToHms } from "../ultils/helper";
+import { secondsToHms } from "../../ultils/helper";
 import { Link } from "react-router-dom";
-import path from "../ultils/path";
+import path from "../../ultils/path";
 const DailyDeals = () => {
     const navigate = useNavigate();
     const [deal, setDeal] = useState(null);
@@ -35,7 +35,6 @@ const DailyDeals = () => {
                     new Date(today).getTime() -
                     new Date().getTime() +
                     24 * 3600 * 1000;
-                // console.log(seconds)
                 const number = secondsToHms(seconds);
                 setHour(number.h);
                 setMinute(number.m);
@@ -99,10 +98,12 @@ const DailyDeals = () => {
                     <CountDown type="Minutes" number={minute} />
                     <CountDown type="Seconds" number={second} />
                 </div>
-                <button className="bg-main text-white w-full uppercase p-2 text-center flex items-center justify-center gap-2 hover:bg-red-400">
+                <Link
+                to ={`${path.DETAIL_PRODUCT}/${deal?._id}/${deal?.slug}`}
+                className="bg-main text-white w-full uppercase p-2 text-center flex items-center justify-center gap-2 hover:bg-red-400">
                     <FiAlignJustify />
-                    <span>Options</span>
-                </button>
+                    <span >Options</span>
+                </Link>
             </div>
         </div>
     );

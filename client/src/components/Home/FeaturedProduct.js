@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import CheckStars from "../ultils/starHelper";
-import { apiGetProducts } from "../apis";
-import DiscountPrice from "./DiscountPrice";
-import { banner1, banner2, banner3, banner4 } from "../assets";
+import CheckStars from "../../ultils/starHelper";
+import { apiGetProducts } from "../../apis";
+import DiscountPrice from "../DiscountPrice";
+import { banner1, banner2, banner3, banner4 } from "../../assets";
 import { Link } from "react-router-dom";
-import path from "../ultils/path";
+import path from "../../ultils/path";
 const FeaturedProduct = () => {
     const [products, setProducts] = useState([]);
     const fProduct = async () => {

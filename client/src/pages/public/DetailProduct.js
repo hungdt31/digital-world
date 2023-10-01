@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { apiGetProduct } from "../../apis/app";
 import {
     convertVNDToUSDString,
@@ -7,7 +7,10 @@ import {
 } from "../../ultils/convertMoney";
 import { obj } from "../../ultils/contants";
 import CheckStars from "../../ultils/starHelper";
+import TitleBanner from "../../components/TitleBanner";
+
 const DetailProduct = () => {
+    
     const params = useParams();
     const { pid, slug } = params;
     const [product, setProduct] = useState(null);
@@ -19,24 +22,9 @@ const DetailProduct = () => {
     useEffect(() => {
         fn(pid);
     }, []);
-    
     return (
         <div className="w-full">
-            <div className="bg-slate-50 w-full h-[80px] flex justify-center items-center">
-                <div className="w-3/4 flex flex-col gap-[8px]">
-                    <div className="font-semibold text-[18px]">
-                        {product?.title}
-                    </div>
-                    <div className="text-[15px] font-normal">
-                        <Link to="/" className="active:text-main">{"Home"}</Link>{" > "}
-                        <Link to="/" className="active:text-main">{product?.category}</Link>
-                        {" > "}
-                        <span className="normal-case font-light">
-                            {product?.title}
-                        </span>
-                    </div>
-                </div>
-            </div>
+            <TitleBanner cateProduct={product?.category} titleProduct={product?.title}/>
             <div className="flex justify-center">
                 <div className="w-3/4">
                     <div className="flex my-5 justify-between">

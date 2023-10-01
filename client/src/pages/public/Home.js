@@ -1,6 +1,6 @@
 import React from "react";
 import { Banner, Sidebar, BestSeller } from "../../components";
-import Collections from "../../components/Collections";
+import Collections from "../../components/Home/Collections";
 import { DailyDeals, FeaturedProduct, CustomSlider, HotCollection } from "../../components";
 
 const Home = () => {

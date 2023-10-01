@@ -1,12 +1,12 @@
 import React, { useEffect, useState, memo } from "react";
-import { slugify } from "../ultils/helper";
+import { slugify } from "../../ultils/helper";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../store/products/asyncAction";
+import { getCategories } from "../../store/products/asyncAction";
 // import { print } from "../store/products/sidebarSlice";
-import { apiGetProducts } from "../apis";
-import icons from "../ultils/icons";
-
+import { apiGetProducts } from "../../apis";
+import icons from "../../ultils/icons";
+import path from '../../ultils/path'
 const Sidebar = () => {
     const { FiAlignJustify } = icons;
     const dispatch = useDispatch();
@@ -61,7 +61,7 @@ const Sidebar = () => {
                                     ? "bg-main text-white px-5 pt-[15px] pb-[14px] text-sm"
                                     : "px-5 pt-[15px] pb-[14px] text-sm hover:text-main"
                             }
-                            to={slugify(el.title)}
+                            to={`${path.COLLECTIONS}/${slugify(el.title)}`}
                         >
                             {el.title} ({el.count})
                         </NavLink>

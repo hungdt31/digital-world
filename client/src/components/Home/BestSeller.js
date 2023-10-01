@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import { apiGetProducts } from "../apis/index";
+import { apiGetProducts } from "../../apis/index";
 import Slider from "react-slick";
-import Product from "./Product";
-import ErrorPage from "../pages/public/ErrorPage";
+import Product from "../Product";
+import ErrorPage from "../../pages/public/ErrorPage";
 import { useNavigate } from "react-router-dom";
 const BestSeller = () => {
     const settings = {

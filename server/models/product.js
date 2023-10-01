@@ -50,16 +50,18 @@ var productSchema = new mongoose.Schema({
         ]
     },
     color:{
-        type: Array,
-        default:[
-            "Black",
-            "White"
-        ]
+        type: Array
     },
     internal:{
         type:Array
     },
     ram:{
+        type:Array
+    },
+    size:{
+        type:Array
+    },
+    capacity:{
         type:Array
     },
     informations:{
