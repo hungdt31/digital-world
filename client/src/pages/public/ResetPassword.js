@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { apiResetPassword } from "../../apis/user";
-import ForgotInput from "../../components/ForgotInput";
+import ForgotInput from "../../components/Login/ForgotInput";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import path from "../../ultils/path";
@@ -11,7 +11,7 @@ const ResetPassword = () => {
     const [password, setPassword] = useState(""); // State để lưu giá trị mật khẩu
     const [confirmPassword, setConfirmPassword] = useState(""); // State để lưu giá trị xác nhận mật khẩu
     const changePassword = async () => {
-        if (password != confirmPassword) {
+        if (password !== confirmPassword) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",

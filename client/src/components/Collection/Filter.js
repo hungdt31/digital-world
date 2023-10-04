@@ -23,12 +23,12 @@ const Filter = (props) => {
             {props.name === "price" && <div className="flex text-[13px] items-center">
                 <RiDeleteBin5Fill onClick={()=>price.setState(null)} size={24}/>
                 <div className=" px-2 py-1 flex">
-                    <p className="underline">
-                        {props.filter.gte}{" VND"}
+                    <p className="">
+                        {Number(props?.filter?.gte).toLocaleString('vi', {style : 'currency', currency : 'VND'})}
                     </p>
                     <p>{"-"}</p>
-                    <p className="underline">
-                        {props.filter.lte}{" VND"}
+                    <p className="">
+                        {Number(props?.filter?.lte).toLocaleString('vi', {style : 'currency', currency : 'VND'})}
                     </p>
                 </div>
             </div>}

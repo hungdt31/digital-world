@@ -92,6 +92,7 @@ export const CollectionsDetail = () => {
                             )}
                         </div>
                         {(color.state.length > 0 ||
+                        price.state !== null ||
                             capacity.state.length > 0 ||
                             internal.state.length > 0 ||
                             ram.state.length > 0 ||

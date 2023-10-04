@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { forgotPasswordIcons } from "../ultils/icons";
+import { forgotPasswordIcons } from "../../ultils/icons";
 import { passwordStrength } from "check-password-strength";
 
 const ForgotInput = ({ label, setInput }) => {

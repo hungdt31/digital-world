@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import img from "../../assets/triangle-2724449_1280.png";
-import InputField from "../../components/InputField";
+import InputField from "../../components/Login/InputField";
 import icons from "../../ultils/icons";
 import { NavLink } from "react-router-dom";
 import path from "../../ultils/path";
