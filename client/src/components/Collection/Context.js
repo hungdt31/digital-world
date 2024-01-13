@@ -7,6 +7,7 @@ const Context = (props) => {
     const [internal, setInternal] = useState([]);
     const [ram, setRam] = useState([]);
     const [size, setSize] = useState([]);
+    const [page, setPage] = useState(1)
     const [price, setPrice] = useState(null);
     const [sort, setSort] = useState(null);
     const value = {
@@ -37,6 +38,10 @@ const Context = (props) => {
         sort:{
             state:sort,
             setState:setSort
+        },
+        page:{
+            state:page,
+            setState: setPage
         }
     };
     return (

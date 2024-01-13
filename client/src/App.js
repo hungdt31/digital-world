@@ -29,7 +29,14 @@ const App = () => {
                         path={path.OUR_SERVICE}
                         element={<Services />}
                     ></Route>
-                    <Route path={path.PRODUCTS} element={<Products />}></Route>
+                    <Route
+                        path={path.PRODUCTS}
+                        element={
+                            <Context>
+                                <CollectionsDetail />
+                            </Context>
+                        }
+                    ></Route>
                     <Route
                         path={path.DETAIL_PRODUCT_PID_TITLE}
                         element={<DetailProduct />}

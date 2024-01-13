@@ -88,7 +88,8 @@ const Variants = () => {
         try {
             const rs = await apiGetProducts({
                 fields: "title,description,price,thumb,totalRatings,ram,color,internal,capacity,size,slug",
-                category: category[0].toUpperCase() + category.slice(1),
+                category: category === "products" ? null : category[0]?.toUpperCase() + category?.slice(1),
+                limit: category === "products" ? 66 : 9
             });
             console.log(rs.data.products);
             setProducts(rs?.data?.products);
@@ -99,7 +100,7 @@ const Variants = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [params]);
 
     useEffect(() => {
         let index = 0;
@@ -133,7 +134,7 @@ const Variants = () => {
             // Cập nhật giá trị lớn nhất sau khi tìm kiếm xong
             setMaxPrice(maxPriceValue);
         }
-    }, [products]);
+    }, [products,params]);
     // console.log(variants)
     return (
         <div className="flex gap-2">

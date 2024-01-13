@@ -10,7 +10,7 @@ export const navagation = [
     {
         id:2,
         value:'PRODUCTS',
-        path:`${path.PRODUCTS}`
+        path:`${path.COLLECTIONS}/products`
     },
     {
         id:3,

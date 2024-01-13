@@ -12,17 +12,17 @@ import Sort from "../../components/Collection/Sort";
 export const CollectionsDetail = () => {
     const params = useParams();
     const context = useContext(VariantContext);
-
-    const { capacity, color, internal, ram, size, price, sort } = context;
+    const { capacity, color, internal, ram, size, price, sort, page } = context;
     const temp = [capacity, color, internal, ram, size, price];
     const { category } = params;
     const [products, setProducts] = useState(null);
-
+    const [count, setCount] = useState(0);
+    const [divArray, setDivArray] = useState([])
     const fetchData = async () => {
         try {
             const rs = await apiGetProducts({
                 fields: "title,description,price,thumb,totalRatings,ram,color,internal,capacity,size,slug",
-                category: category[0].toUpperCase() + category.slice(1),
+                category:  category === "products" ? null : category[0]?.toUpperCase() + category?.slice(1),
                 ram: ram.state,
                 size: size.state,
                 capacity: capacity.state,
@@ -30,18 +30,28 @@ export const CollectionsDetail = () => {
                 internal: internal.state,
                 price: price.state,
                 sort: sort.state,
+                limit : category !== "products" ? 9 : 12,
+                page:page.state
             });
             // console.log(rs.data.products);
             setProducts(rs?.data?.products);
+            if(rs?.data?.counts % 12 == 0 && rs?.data?.counts !== 0){
+                setCount(rs?.data?.counts/12)
+            }
+            else{
+                setCount(Math.floor(rs?.data?.counts/12 + 1))
+            }
+            setDivArray([])
+            for(let i = 1; i <= count; i++)
+            setDivArray(prev => [...prev,<div className={`font-semibold text-[15px] cursor-pointer ${i === page.state ? 'text-main':''}`} onClick={()=>{page.setState(i)}}>{i}</div>])
         } catch (error) {
             console.error(error);
         }
     };
-
     useEffect(() => {
         fetchData();
-    }, [ram, size, capacity, color, internal, price]);
-    // console.log(context);
+    }, [page,price,ram,size,capacity,internal,color,count,params]);
+    console.log(count)
     return (
         <div className="w-full">
             <TitleBanner
@@ -130,6 +140,15 @@ export const CollectionsDetail = () => {
                             />
                         ))}
                     </div>
+                    {category === "products" && 
+                    <div className="flex justify-center"><div className="w-1/4 flex justify-around items-center">
+                        <button className="text-[40px]" onClick={()=>{page.setState((prev)=>prev > 1 ? prev-1 : prev)}}>{"<"}</button>
+                        {divArray.map((el)=>{
+                            return el
+                        })}
+                        <button className="text-[40px]" onClick={() =>{page.setState((prev)=>prev >= count ? prev : prev + 1 )}}>{">"}</button>
+                    </div>
+                    </div>}
                 </div>
             </div>
         </div>

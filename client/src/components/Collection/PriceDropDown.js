@@ -7,7 +7,7 @@ const PriceDropDown = ({ obj }) => {
     const context = useContext(VariantContext);
     const [display, setDisplay] = useState(false);
     const { FiChevronDown, FiChevronUp } = icons;
-    const { price } = context;
+    const { price, page } = context;
     const [input1, setInput1] = useState(null);
     const [input2, setInput2] = useState(null);
     const [dinput1, setDInput1] = useState(null);
@@ -76,6 +76,7 @@ const PriceDropDown = ({ obj }) => {
                                         gte: input1,
                                         lte: input2,
                                     });
+                                    page.setState(1)
                                 }}
                             >
                                 Submit

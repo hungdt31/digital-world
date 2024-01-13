@@ -12,6 +12,7 @@ export const CheckBox = ({ val, setState, name}) => {
             setState((prev) => [...prev, val.value]);
         }
         setIsChecked(prev =>!prev)
+        context.page.setState(1)
     };
     useEffect(() => {
         setIsChecked(context[name].state?.includes(val.value))
